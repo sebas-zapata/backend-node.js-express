@@ -2,58 +2,68 @@
 <html lang="es">
 
 <head>
-    <!-- Metadatos esenciales -->
+    <!-- Metadatos esenciales para compatibilidad y responsive design -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Título de la página -->
+    <!-- Título del documento -->
     <title>Gestión de Usuarios</title>
 
-    <!-- Estilos de Bootstrap -->
+    <!-- CDN de Font Awesome para uso de iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Bootstrap 5 para estilos y componentes responsive -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <h2 class="text-center mt-4">Gestión de Usuarios</h2>
+    <div class="container-fluid">
+        <!-- Título principal de la aplicación -->
+        <h2 class="text-center mt-4">Gestión de Usuarios Node Js y Express</h2>
 
         <div class="row justify-content-center">
-            <!-- 📌 Formulario para agregar usuario -->
-            <div class="col-lg-4">
+            <!-- 📌 Sección: Formulario para agregar usuario -->
+            <div class="col-lg-3">
                 <div class="card shadow-lg p-4">
                     <h4 class="text-center mb-3">Agregar Usuario</h4>
+
+                    <!-- Formulario con campos básicos -->
                     <form autocomplete="off" id="userForm">
-                        <!-- Campo Nombre -->
+                        <!-- Campo de nombre -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
                             <input type="text" id="name" class="form-control" placeholder="Ingrese su nombre">
                         </div>
-                        <!-- Campo Apellido -->
+
+                        <!-- Campo de apellido -->
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
                             <input type="text" id="apellido" class="form-control" placeholder="Ingrese su apellido">
                         </div>
-                        <!-- Campo Teléfono -->
+
+                        <!-- Campo de teléfono -->
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Teléfono</label>
                             <input type="number" id="telefono" class="form-control" placeholder="Ingrese su teléfono">
                         </div>
-                        <!-- Campo Correo Electrónico -->
+
+                        <!-- Campo de correo electrónico -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico</label>
                             <input type="email" id="email" class="form-control" placeholder="Ingrese su correo">
                         </div>
-                        <!-- Botón Agregar Usuario -->
+
+                        <!-- Botón para agregar usuario -->
                         <div class="d-grid">
-                            <button type="button" class="btn btn-success" onclick="addUser()">
-                                <i class="bi bi-person-plus"></i> Agregar Usuario
+                            <button type="button" class="btn btn-success btn-sm" onclick="addUser()">
+                                <i class="fas fa-user-plus"></i>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- 📌 Tabla para mostrar los usuarios -->
+            <!-- 📌 Sección: Tabla para mostrar lista de usuarios -->
             <div class="col-lg-8">
                 <div class="card shadow-lg p-4">
                     <h4 class="text-center mb-3">Lista de Usuarios</h4>
@@ -69,7 +79,8 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="userTable"></tbody> <!-- Aquí se cargará la lista de usuarios -->
+                            <!-- Aquí se inyectarán los datos dinámicamente -->
+                            <tbody id="userTable"></tbody>
                         </table>
                     </div>
                 </div>
@@ -77,46 +88,51 @@
         </div>
     </div>
 
-    <!-- 📌 Modal de Edición de Usuario -->
+    <!-- 📌 Modal Bootstrap para editar usuarios -->
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                <!-- Cabecera del modal -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
+
+                <!-- Cuerpo del modal con formulario de edición -->
                 <div class="modal-body">
                     <form id="editUserForm">
-                        <!-- Campo oculto para almacenar el ID del usuario -->
+                        <!-- Campo oculto para guardar el ID del usuario -->
                         <input type="hidden" id="editUserId">
 
-                        <!-- Campo Nombre -->
+                        <!-- Campo de nombre -->
                         <div class="mb-3">
                             <label for="editName" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="editName">
                         </div>
 
-                        <!-- Campo Apellido -->
+                        <!-- Campo de apellido -->
                         <div class="mb-3">
                             <label for="editApellido" class="form-label">Apellido</label>
                             <input type="text" class="form-control" id="editApellido">
                         </div>
 
-                        <!-- Campo Teléfono -->
+                        <!-- Campo de teléfono -->
                         <div class="mb-3">
                             <label for="editTelefono" class="form-label">Teléfono</label>
                             <input type="number" class="form-control" id="editTelefono">
                         </div>
 
-                        <!-- Campo Correo Electrónico -->
+                        <!-- Campo de correo electrónico -->
                         <div class="mb-3">
                             <label for="editEmail" class="form-label">Correo Electrónico</label>
                             <input type="email" class="form-control" id="editEmail">
                         </div>
 
-                        <!-- Botón Guardar Cambios -->
+                        <!-- Botón para guardar los cambios -->
                         <div class="d-grid">
-                            <button type="button" class="btn btn-warning" onclick="saveUserChanges()">Guardar Cambios</button>
+                            <button type="button" class="btn btn-warning" onclick="saveUserChanges()">
+                                <i class="fas fa-save"></i> Guardar Cambios
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -124,12 +140,14 @@
         </div>
     </div>
 
-    <!-- 📌 Scripts -->
-    <!-- Bootstrap JS (necesario para los modales) -->
+    <!-- 📌 Scripts necesarios para funcionalidad -->
+    <!-- Bootstrap Bundle (incluye Popper) para funcionamiento de modales -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 para alertas personalizadas -->
+
+    <!-- SweetAlert2 para mostrar alertas elegantes -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Archivo de funciones JavaScript -->
+
+    <!-- Archivo con las funciones JavaScript personalizadas -->
     <script src="script.js"></script>
 </body>
 
